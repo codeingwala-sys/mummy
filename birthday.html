@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Birthday Mom</title>
+<style>
+:root{--bg:#fff6fb;--accent:#ff6fa3;--accent-2:#9b6bff;--muted:#6b4b60}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui;background:linear-gradient(180deg,var(--bg),#fff);color:#3b2333;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.app{width:100%;max-width:560px;padding:18px;position:relative;z-index:2}
+#confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:-1}
+.page{display:none;border-radius:16px;padding:18px;background:#fff9fb;box-shadow:0 18px 50px rgba(120,60,120,0.06);min-height:64vh;position:relative;overflow:hidden}
+.page.active{display:block}
+.title{font-weight:900;font-size:22px;margin-bottom:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;color:transparent}
+.muted{font-size:13px;color:var(--muted);margin-bottom:10px}
+.controls{position:fixed;left:18px;right:18px;bottom:18px;display:flex;justify-content:center;gap:12px;z-index:9999}
+.btn{padding:10px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:700;min-width:120px;background:var(--accent);color:#fff}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid rgba(255,111,163,0.3)}
+.surprise{display:flex;align-items:center;justify-content:center;height:58vh}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+  width:100%;
+  height:auto;
+  place-items:center;
+}
+.photo-placeholder{min-height:120px;border-radius:12px;background:#ffeaf4;display:flex;align-items:center;justify-content:center;color:#9b6b8f;font-weight:600;padding:10px;text-align:center}
+.cake-svg{width:90%;max-width:420px;display:block;margin:auto}
+.happy-text{position:absolute;left:50%;top:10%;transform:translate(-50%,-30%);opacity:0;font-size:34px;font-weight:900;color:var(--accent-2);transition:.5s}
+.happy-text.show{opacity:1;transform:translate(-50%,0)}
+/* Sparkles */
+.sparkle{position:absolute;width:6px;height:6px;background:#ffd1e8;border-radius:50%;box-shadow:0 0 6px #ff6fa3;animation:twinkle 1.6s infinite ease-in-out}
+.s1{top:28%;left:42%}
+.s2{top:22%;left:52%;animation-delay:.4s}
+.s3{top:34%;left:48%;animation-delay:.8s}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.7)}}
+</style>
+</head>
+<body>
+<canvas id="confettiCanvas"></canvas>
+<div class="app">
+
+<section id="p1" class="page active">
+  <div class="title">Happy Birthday Pochaaa...</div>
+  <div class="muted"> 50Yrs er buri🥹</div>
+  <div class="surprise">
+    <div class="trailer-card" style="width:100%;max-width:420px;padding:18px;border-radius:14px;background:linear-gradient(90deg,#1f1630,#2e1b45);color:#fff;box-shadow:0 12px 40px rgba(0,0,0,.1)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(180deg,#ff6fa3,#9b6bff);display:grid;place-items:center;font-size:28px;font-weight:800">▶</div>
+        <div style="flex:1">
+          <div style="font-size:18px;font-weight:800">Tonight's Feature</div>
+          <div style="opacity:.7;font-size:13px;margin-top:4px">Madde with Ador Ador Pappi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="p2" class="page">
+  <div class="title">Memories</div>
+  <div class="muted">Ayi dekho Photooo</div>
+  <div class="surprise">
+    <div id="galleryArea" style="width:100%">
+      <div class="gallery" id="gallery">
+        <div class="photo-placeholder">Add images in code</div>
+        <div class="photo-placeholder">Add images in code</div>
+        <div class="photo-placeholder">Add images in code</div>
+        <div class="photo-placeholder">Add images in code</div>
+        <div class="photo-placeholder">Add images in code</div>
+        <div class="photo-placeholder">Add images in code</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="p3" class="page">
+  <div class="title">Cake Cut Tap Once</div>
+  <div class="muted">Tap the cake to slice</div>
+  <div class="surprise">
+    <div id="cakeContainer" style="position:relative;width:100%">
+
+      <div id="happyText" class="happy-text">Happy Birthday!  50</div>
+      <div class="sparkle s1"></div>
+      <div class="sparkle s2"></div>
+      <div class="sparkle s3"></div>
+
+      <svg id="cakeSVG" class="cake-svg" viewBox="0 0 260 200">
+        <ellipse cx="130" cy="160" rx="100" ry="18" fill="#f7d7e6" />
+        <rect x="60" y="80" width="140" height="70" rx="14" fill="#ffe3ec" stroke="#f0b3d0" stroke-width="2"/>
+        <path d="M60 90 Q90 110 110 90 Q130 110 150 90 Q170 110 200 90 L200 110 L60 110 Z" fill="#ffbcd4" />
+        <g id="candlesGroup">
+          <g transform="translate(100,60)"><rect width="10" height="30" rx="4" fill="#ffd1e8"/><circle cx="5" cy="-4" r="4" fill="#ff8fb3"/></g>
+          <g transform="translate(125,60)"><rect width="10" height="30" rx="4" fill="#ffd1e8"/><circle cx="5" cy="-4" r="4" fill="#ffd27a"/></g>
+          <g transform="translate(150,60)"><rect width="10" height="30" rx="4" fill="#ffd1e8"/><circle cx="5" cy="-4" r="4" fill="#fff1b6"/></g>
+        </g>
+        <path id="slice" d="M130 80 L180 150 L80 150 Z" fill="#fff5f8" opacity="0"/>
+        <circle id="confettiAnchor" cx="130" cy="80" r="2" fill-opacity="0"/>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+<section id="p4" class="page">
+  <div class="title">To amr Buri maa</div>
+  <div class="muted">Shuno Shuno</div>
+  <div style="padding-top:12px">
+    <div class="para-box" contenteditable="true" id="paraBox">Happy Birthday mummy... Ashirbaad nao shob shomoy bhalo thako and amake ektu kom boko... but bhulbe na tumi buri hoye gacho hehehehehe... cholo cholo akhon ghumiye poro bura der ato raat obdi jagte nei... happy birthday Pocha<br> Ai nao ador ador pappi😘😘😘</div>
+  </div>
+</section>
+
+<div class="controls">
+  <button id="prevBtn" class="btn ghost">Prev</button>
+  <button id="nextBtn" class="btn">Next</button>
+</div>
+</div>
+
+<script>
+// FIXED FULL SCRIPT
+
+const pages=[
+ document.getElementById('p1'),
+ document.getElementById('p2'),
+ document.getElementById('p3'),
+ document.getElementById('p4')
+];
+let idx=0;
+
+function show(i){
+ idx=(i+pages.length)%pages.length;
+ pages.forEach((p,n)=>p.classList.toggle('active',n===idx));
+}
+show(0);
+
+document.getElementById('nextBtn').addEventListener('click',()=>{ show(idx+1); });
+document.getElementById('prevBtn').addEventListener('click',()=>{ show(idx-1); });
+
+// Confetti
+(function(){const c=document.getElementById('confettiCanvas');const ctx=c.getContext('2d');let W,H;function r(){W=c.width=innerWidth;H=c.height=innerHeight}r();addEventListener('resize',r);
+let parts=[];function rand(a,b){return Math.random()*(b-a)+a}
+window._burst=(x,y)=>{for(let i=0;i<120;i++)parts.push({x,y,vx:rand(-8,8),vy:rand(-12,-3),r:rand(3,6),c:['#ff6fa3','#ffd1e8','#9b6bff','#ffd6f0','#ffd27a'][~~rand(0,5)],life:rand(40,130)})};
+(function frame(){ctx.clearRect(0,0,W,H);for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.32;p.life--;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();if(p.life<=0||p.y>H+20)parts.splice(i,1)}requestAnimationFrame(frame)})();})();
+
+// Cake
+const cake=document.getElementById('cakeSVG');
+const slice=document.getElementById('slice');
+const happy=document.getElementById('happyText');
+let cut=false;
+
+cake.addEventListener('click',()=>{
+ if(cut) return;
+ cut=true;
+ slice.style.opacity=1;
+ slice.style.transition='opacity .4s';
+ setTimeout(()=>happy.classList.add('show'),400);
+ const a=document.getElementById('confettiAnchor').getBoundingClientRect();
+ window._burst(a.left+a.width/2,a.top+a.height/2);
+});
+
+// Gallery
+const images=[
+  "pic1.jpg",
+  "pic2.jpg",
+  "pic3.jpg",
+  "pic4.jpg"
+];
+const gallery=document.getElementById('gallery');
+function renderGallery(){
+ gallery.innerHTML='';
+ if(images.length===0){
+   gallery.innerHTML=`<div class='photo-placeholder'>Add images in code</div><div class='photo-placeholder'>Add images in code</div><div class='photo-placeholder'>Add images in code</div><div class='photo-placeholder'>Add images in code</div><div class='photo-placeholder'>Add images in code</div><div class='photo-placeholder'>Add images in code</div>`;
+   return;
+ }
+ images.forEach(src=>{
+   const img=document.createElement('img');
+   img.src=src;
+   img.style.width='100%'; img.style.background='#fff'; img.style.borderRadius='20px';
+   img.style.height='150px';
+   img.style.objectFit='contain';
+   img.style.borderRadius='20px';
+   gallery.appendChild(img);
+ });
+}
+renderGallery();
+
+</script>
+</body>
